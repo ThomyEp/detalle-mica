@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tres mensajes para ti 💗</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui;color:#754565;background:linear-gradient(135deg,#ffe4ef,#eee4ff,#fff7e8);overflow-x:hidden}
+.screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:20px;text-align:center;position:relative;z-index:1}#home{display:flex}
+.panel{width:min(94vw,720px);padding:clamp(22px,5vw,44px);background:#ffffffdc;backdrop-filter:blur(12px);border:1px solid white;border-radius:28px;box-shadow:0 25px 70px #ad77a633}
+.tag{font-size:.78rem;letter-spacing:1.5px;color:#bd629c;background:#ffe8f3;padding:8px 13px;border-radius:30px}
+h1{font:normal clamp(2rem,7vw,3rem) Georgia;color:#a74e91;margin:20px 0 10px}p{line-height:1.7}
+button{border:0;border-radius:25px;padding:12px 18px;background:linear-gradient(120deg,#ff83b6,#b18af2);color:white;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 8px 20px #d78ac455}
+button:hover{transform:translateY(-2px)}.soft{background:#fff;color:#bd5b9b;border:1px solid #f3c2df;box-shadow:none}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:25px 0}
+.gamecard{border:1px solid #f2c6df;background:#fff6fb;border-radius:20px;padding:18px 10px;cursor:pointer;transition:.2s}
+.gamecard:hover{transform:translateY(-5px);box-shadow:0 10px 25px #d9a2c633}.emoji{font-size:2.7rem}.gamecard h3{color:#ad5c98;margin:8px 0}.gamecard p{font-size:.85rem;margin:0}
+@media(max-width:520px){.cards{grid-template-columns:1fr}.gamecard{display:flex;align-items:center;gap:14px;text-align:left}.emoji{min-width:55px}}
+.note{background:#fff5fb;border:1px dashed #e8a7ce;padding:15px;border-radius:16px;margin:15px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:400px;margin:20px auto}
+.tile{min-height:75px;border-radius:16px;background:#fff5fb;border:1px solid #f3c7df;display:grid;place-items:center;font-size:2rem;cursor:pointer}
+.tile.found{background:#e9f9ee;border-color:#a8dfbd}
+.barbox{height:8px;background:#f6d8e9;border-radius:20px;overflow:hidden;margin:15px 0}.bar{height:100%;width:0;background:linear-gradient(90deg,#ff83b6,#a88af2);transition:width .3s}
+.choice{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0}.choice button{background:#fff;color:#a65591;border:1px solid #efc2df;box-shadow:none}
+.message{font:clamp(1.05rem,3vw,1.3rem) Georgia;line-height:1.9;color:#865477;margin:22px auto;max-width:510px}
+.float{position:fixed;bottom:-30px;animation:rise linear infinite;opacity:.45;pointer-events:none;z-index:0}@keyframes rise{to{transform:translateY(-110vh);opacity:0}}
+</style></head><body>
+<section class="screen" id="home"><div class="panel"><span class="tag">✨ TRES DETALLITOS PARA TI ✨</span><h1>Hola, bonita 🌷</h1><p>Preparé tres mini juegos.<br>Cada uno esconde un mensaje especial para ti 💌</p><div class="cards">
+<div class="gamecard" onclick="startGame(1)"><div class="emoji">⭐</div><div><h3>1. Busca estrellas</h3><p>Encuentra 3 estrellas y descubre el primer mensaje.</p></div></div>
+<div class="gamecard" onclick="startGame(2)"><div class="emoji">🧩</div><div><h3>2. El corazón secreto</h3><p>Resuelve la adivinanza para revelar otro mensaje.</p></div></div>
+<div class="gamecard" onclick="startGame(3)"><div class="emoji">🌷</div><div><h3>3. Elige una flor</h3><p>Encuentra la flor correcta y abre el último mensaje.</p></div></div>
+</div><p id="status">Mensajes descubiertos: 0/3</p><button id="all" style="display:none" onclick="show(4)">Ver los 3 mensajes 💖</button></div></section>
+
+<section class="screen" id="g1"><div class="panel"><span class="tag">JUEGO 1 · ESTRELLAS</span><h1>Encuentra las estrellas ⭐</h1><p>Busca las 3 estrellas escondidas.</p><div class="barbox"><div class="bar" id="b1"></div></div><small id="c1">0/3</small><div class="grid" id="grid"></div><div class="note" id="f1">¡Busca con atención! ✨</div><div id="m1" class="message" hidden>Me encanta tu sonrisa y la forma tan bonita en que brillan tus ojos. ✨ Tienen esa magia que hace que un momento sencillo se vuelva especial.</div><button class="soft" onclick="show(0)">Volver a las tarjetas</button></div></section>
+
+<section class="screen" id="g2"><div class="panel"><span class="tag">JUEGO 2 · ADIVINANZA</span><h1>El corazón secreto 💗</h1><p>Me ves cuando estás feliz, puedo contagiar alegría y a veces aparezco sin darte cuenta. ¿Qué soy?</p><div class="choice" id="answers"></div><div class="note" id="f2">Elige una respuesta para encontrar el mensaje.</div><div id="m2" class="message" hidden>Y también me gustaría seguir descubriendo cosas nuevas de ti: tus gustos, tus historias, tus sueños y esas pequeñas cosas que te hacen ser tú. 🌷</div><button class="soft" onclick="show(0)">Volver a las tarjetas</button></div></section>
+
+<section class="screen" id="g3"><div class="panel"><span class="tag">JUEGO 3 · FLORES</span><h1>Elige una flor 🌷</h1><p>Una flor guarda un último mensaje… ¿cuál será?</p><div class="choice" id="flowers"></div><div class="note" id="f3">Escoge con el corazón 😊</div><div id="m3" class="message" hidden>Espero que hoy sonrías muchísimo y que la vida te regale razones tan lindas como tú. 💗</div><button class="soft" onclick="show(0)">Volver a las tarjetas</button></div></section>
+
+<section class="screen" id="final"><div class="panel"><span class="tag">💌 TUS TRES MENSAJES</span><h1>Un poquito más de magia ✨</h1><div style="font-size:2.8rem">🌸💖🌸</div><div class="message">Me encanta tu sonrisa y la forma tan bonita en que brillan tus ojos. ✨ Tienen esa magia que hace que un momento sencillo se vuelva especial.</div><div class="message">Y también me gustaría seguir descubriendo cosas nuevas de ti: tus gustos, tus historias, tus sueños y esas pequeñas cosas que te hacen ser tú. 🌷</div><div class="message">Espero que hoy sonrías muchísimo y que la vida te regale razones tan lindas como tú. 💗</div><div style="font:italic 1.4rem Georgia;color:#bd5b9b">Un detallito para ti ♡</div><button class="soft" onclick="show(0)">Volver a jugar ↻</button></div></section>
+
+<script>
+const ids=['home','g1','g2','g3','final'];function show(n){ids.forEach((id,i)=>document.getElementById(id).style.display=i===n?'flex':'none')}
+let done=[false,false,false],found=0;function update(){let n=done.filter(Boolean).length;document.getElementById('status').textContent='Mensajes descubiertos: '+n+'/3';document.getElementById('all').style.display=n===3?'inline-block':'none'}
+function startGame(n){show(n);if(n===1)setupStars();if(n===2)setupRiddle();if(n===3)setupFlowers()}
+function setupStars(){found=0;let g=document.getElementById('grid');g.innerHTML='';document.getElementById('m1').hidden=true;document.getElementById('b1').style.width='0';document.getElementById('c1').textContent='0/3';document.getElementById('f1').textContent='¡Busca con atención! ✨';let spots=[1,4,8];for(let i=0;i<9;i++){let b=document.createElement('button');b.className='tile';b.textContent='❔';b.onclick=()=>{if(b.classList.contains('found'))return;if(spots.includes(i)){b.textContent='⭐';b.classList.add('found');found++;document.getElementById('b1').style.width=found/3*100+'%';document.getElementById('c1').textContent=found+'/3';if(found===3){done[0]=true;update();document.getElementById('f1').textContent='¡Mensaje desbloqueado! 💌';document.getElementById('m1').hidden=false}}else{b.textContent=['🌸','🍀','🦋'][Math.floor(Math.random()*3)];b.disabled=true;document.getElementById('f1').textContent='Esta casilla escondía otra cosita. ¡Sigue!'}};g.append(b)}}
+function setupRiddle(){let a=document.getElementById('answers');a.innerHTML='';document.getElementById('m2').hidden=true;document.getElementById('f2').textContent='Elige una respuesta.';['Una sonrisa 😊','Un paraguas ☂️','Un zapato 👟'].forEach((x,i)=>{let b=document.createElement('button');b.textContent=x;b.onclick=()=>{if(i===0){done[1]=true;update();document.getElementById('f2').textContent='¡Correcto! Mensaje desbloqueado 💗';document.getElementById('m2').hidden=false;a.querySelectorAll('button').forEach(z=>z.disabled=true)}else document.getElementById('f2').textContent='Mmm… prueba otra vez 😉'};a.append(b)})}
+function setupFlowers(){let a=document.getElementById('flowers');a.innerHTML='';document.getElementById('m3').hidden=true;document.getElementById('f3').textContent='Escoge una flor.';['🌹','🌻','🌷','🌼'].forEach((x,i)=>{let b=document.createElement('button');b.textContent=x;b.style.fontSize='2.2rem';b.onclick=()=>{if(i===2){done[2]=true;update();document.getElementById('f3').textContent='¡Mensaje desbloqueado! 🌷';document.getElementById('m3').hidden=false;a.querySelectorAll('button').forEach(z=>z.disabled=true)}else document.getElementById('f3').textContent='Qué linda flor… pero el mensaje está en otra. ¡Intenta de nuevo!'};a.append(b)})}
+for(let i=0;i<18;i++){let f=document.createElement('span');f.className='float';f.textContent=['♡','✦','💕','🌸'][i%4];f.style.left=Math.random()*100+'vw';f.style.animationDuration=8+Math.random()*10+'s';f.style.animationDelay=-Math.random()*15+'s';f.style.fontSize=15+Math.random()*20+'px';document.body.append(f)}
+</script></body></html>
